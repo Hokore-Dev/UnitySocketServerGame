@@ -40,7 +40,15 @@ namespace SocketIO
 {
 	public class SocketIOComponent : MonoBehaviour
 	{
-		#region Public Properties
+        #region Public Properties
+
+        public static SocketIOComponent Instance
+        {
+            get
+            {
+                return _instance;
+            }
+        }
 
         public enum EDeploy
         {
@@ -60,6 +68,8 @@ namespace SocketIO
         #endregion
 
         #region Private Properties
+
+        private static SocketIOComponent _instance;
 
         private int reconnectDelay = 5;
         private float ackExpirationTime = 1800f;
@@ -112,6 +122,9 @@ namespace SocketIO
 
 		public virtual void Awake()
 		{
+            _instance = this;
+            DontDestroyOnLoad(this.gameObject);
+
 			encoder = new Encoder();
 			decoder = new Decoder();
 			parser = new Parser();

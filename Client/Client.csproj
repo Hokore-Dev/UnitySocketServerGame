@@ -93,7 +93,6 @@
     <Compile Include="Assets\SocketExample\Script\Game\Character.cs" />
     <Compile Include="Assets\SocketExample\Script\Game\ConnectUI.cs" />
     <Compile Include="Assets\SocketExample\Script\Game\Game.cs" />
-    <Compile Include="Assets\SocketExample\Script\Server\NetworkManager.cs" />
     <Compile Include="Assets\SocketExample\Script\Server\ServerMethod.cs" />
     <Compile Include="Assets\SocketExample\Script\Server\ServerModel.cs" />
   </ItemGroup>

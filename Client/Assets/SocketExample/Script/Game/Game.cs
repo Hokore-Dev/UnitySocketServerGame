@@ -28,28 +28,28 @@ public class Game : MonoBehaviour
 
 	private void RegistEvent()
 	{
-		NetworkManager.it.AddEventCallback(ServerMethod.OTHER_PLAYER_UPDATE, (data) =>
+        SocketIO.SocketIOComponent.Instance.On(ServerMethod.OTHER_PLAYER_UPDATE, (data) =>
 		{
-			var user = JsonUtility.FromJson<ServerModel.User>(data);
+			var user = JsonUtility.FromJson<ServerModel.User>(data.data.ToString());
 			if (_userObjects.ContainsKey(user.name))
 			{
 				_userObjects[user.name].transform.localPosition = user.position;
 			}
 		});
-		
-		NetworkManager.it.AddEventCallback(ServerMethod.OTHER_USER_DISCONNECT, (data) =>
+
+        SocketIO.SocketIOComponent.Instance.On(ServerMethod.OTHER_USER_DISCONNECT, (data) =>
 		{
-			var user = JsonUtility.FromJson<ServerModel.User>(data);
+			var user = JsonUtility.FromJson<ServerModel.User>(data.data.ToString());
 			if (_userObjects.ContainsKey(user.name))
 			{
 				Destroy(_userObjects[user.name]);
 				_userObjects.Remove(user.name);
 			}
 		});
-		
-		NetworkManager.it.AddEventCallback(ServerMethod.OTHER_USER_CONNECT, (data) =>
+
+        SocketIO.SocketIOComponent.Instance.On(ServerMethod.OTHER_USER_CONNECT, (data) =>
 		{
-			var user = JsonUtility.FromJson<ServerModel.User>(data);
+			var user = JsonUtility.FromJson<ServerModel.User>(data.data.ToString());
 			if (!_userObjects.ContainsKey(user.name))
 			{
 				GenerateUser(user);

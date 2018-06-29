@@ -42,7 +42,7 @@ public class Character : MonoBehaviour
 			if (_lastPosition != (Vector2)this.transform.localPosition)
 			{
 				_userData.position = this.transform.localPosition;
-				NetworkManager.it.Emit(ServerMethod.PLAYER_UPDATE, _userData.ToJSON());
+				SocketIO.SocketIOComponent.Instance.Emit(ServerMethod.PLAYER_UPDATE, _userData.ToJSON());
 			}
 			_lastPosition = this.transform.localPosition;
 		}

@@ -13,15 +13,15 @@ public class ConnectUI : MonoBehaviour
     
     private void Start()
     {
-        NetworkManager.it.On(ServerMethod.CONNECT, (data) =>
+        SocketIO.SocketIOComponent.Instance.On(ServerMethod.CONNECT, (data) =>
         {
             Debug.Log("Connect Socket Server");
         });
-        
-        NetworkManager.it.AddEventCallback(ServerMethod.OTHER_USER_CONNECT,
+
+        SocketIO.SocketIOComponent.Instance.On(ServerMethod.OTHER_USER_CONNECT,
             (data) =>
             {
-                var user    = JsonUtility.FromJson<ServerModel.User>(data);
+                var user    = JsonUtility.FromJson<ServerModel.User>(data.data.ToString());
                 if (!_userDic.ContainsKey(user.name))
                 {
                     _userDic.Add(user.name, user);
@@ -46,6 +46,6 @@ public class ConnectUI : MonoBehaviour
             position = new Vector2(Random.Range(0, 1280) - 640, Random.Range(0, 720) - 360)
         };
         _userDic.Add(_currentUser.name, _currentUser);
-        NetworkManager.it.Emit(ServerMethod.USER_CONNECT, _currentUser.ToJSON());
+        SocketIO.SocketIOComponent.Instance.Emit(ServerMethod.USER_CONNECT, _currentUser.ToJSON());
     }
 }
